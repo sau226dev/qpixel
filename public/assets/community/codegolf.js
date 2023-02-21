@@ -95,7 +95,7 @@
           page: i + 1, // +1 because pages are 1-indexed while arrays are 0-indexed
           username: answerPost.querySelector('.user-card--link').firstChild.data.trim(),
           userid: answerPost.querySelector('.user-card--link').href.match(/\d+/)[0],
-          full_language, full_language,
+          full_language,
           language: language,
           variant: variant,
           extensions: extensions,
