@@ -1,15 +1,15 @@
 <h1>Stop impersonating</h1>
 <p>
   You (<%= @impersonator.username %>) are currently impersonating <%= current_user.username %>.
-  <% if @impersonator.sso_profile.present? %>
-    You can stop impersonating them with the button below, after which you will have to sign in again.
+  <% if @impersonator.sso_profile.present? || Rails.env.development? %>
+    You can stop impersonating them with the button below<%= Rails.env.development? ? "." : ", after which you will have to sign in again." %>
   <% else %>
     To stop impersonating them, verify your password below.
   <% end %>
 </p>
 
 <%= form_tag stop_impersonating_path, class: 'form-horizontal' do %>
-  <% unless @impersonator.sso_profile.present? %>
+  <% unless @impersonator.sso_profile.present? || Rails.env.development? %>
     <div class="form-group">
       <%= label_tag :password, 'Password', class: 'form-element' %>
       <%= password_field_tag :password, '', class: 'form-element' %>
@@ -17,6 +17,6 @@
   <% end %>
 
   <div class="actions">
-    <%= submit_tag 'Verify & Stop Impersonating', class: 'button is-primary is-filled' %>
+    <%= submit_tag @impersonator.sso_profile.present? || Rails.env.development? ? 'Stop Impersonating' : 'Verify & Stop Impersonating', class: 'button is-primary is-filled' %>
   </div>
 <% end %>
